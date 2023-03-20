@@ -21,23 +21,20 @@ class MyAppBar extends StatelessWidget {
           width: 120.0, // in logical pixels
           padding: const EdgeInsets.symmetric(vertical: 30.0),
           decoration: BoxDecoration(color: Colors.blueGrey),
-          child: Column(children: [
-            Expanded(
-              child: title,
-            ),
-            // Row(children: [
-            //   Expanded(
-            name,
-            // ),
-            // Expanded(
-            place,
-            // ])
-            // ),
-          ]))
-    ] // Children
-        ); //)
-    //   ],
-    // );
+          child: Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                //Expanded(flex: 4, child:
+                title,
+                //),
+                //Expanded(
+                //flex: 4,
+                //child:
+                Image.asset('assets/images/42770_crop.jpg'), //),
+                name,
+                place
+              ]))
+    ]);
   }
 }
 
@@ -83,3 +80,22 @@ void main() {
     ),
   );
 }
+
+// // preload images
+// class AppImages {
+//  static const String imagesPath = “assets/images/”;
+//  static const String gal = imagesPath + “42770_crop.jpg”;
+// }
+
+// Image myImage;
+// @override
+// void initState() {
+//  super.initState();
+//  myImage = Image.asset(AppImages.gal);
+// }
+
+// @override
+// void didChangeDependencies() {
+//   super.didChangeDependencies();
+//   precacheImage(myImage.image, context); // <-- SEE HERE
+// }
