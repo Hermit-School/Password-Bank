@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'authscreen.dart';
+import 'auth_screen.dart';
 //import 'login_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -37,6 +37,7 @@ class LoginPageState extends State<LoginPage> {
                 );
               },
               icon: Icon(Icons.arrow_back),
+              tooltip: 'Back',
               color: Colors.white,
             ),
           ),
@@ -52,7 +53,7 @@ class LoginPageState extends State<LoginPage> {
                         fontFamily: 'Montserrat',
                         color: Colors.white,
                       )),
-                  SizedBox(height: 30),
+                  SizedBox(height: 50),
                   TextField(
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
@@ -92,7 +93,7 @@ class LoginPageState extends State<LoginPage> {
                     },
                   ),
                   SizedBox(
-                    height: 16.0,
+                    height: 50.0,
                   ),
                   ElevatedButton(
                     onPressed: () {

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'authscreen.dart';
+import 'auth_screen.dart';
 // import './showcase.dart';
 // import './workspace.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

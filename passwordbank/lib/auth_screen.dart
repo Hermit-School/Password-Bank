@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
+import 'new_user.dart';
 
 // class AuthScreen extends StatefulWidget {
 //   @override
@@ -159,9 +160,10 @@ class AuthScreenState extends State<AuthScreen> {
               ElevatedButton(
                 onPressed: () {
                   // buttonForeColor = Colors.white;
-                  // Navigator.push(
-                  //     context,// Handle sign-up button press
-                  //   );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignupPage()),
+                  );
                 },
                 style: ButtonStyle(
                   foregroundColor: MaterialStateProperty.all(Color(0xFF32BEA6)),
