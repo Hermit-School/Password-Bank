@@ -53,7 +53,7 @@ class SignupPageState extends State<SignupPage> {
               },
               icon: Icon(Icons.arrow_back),
               color: Colors.white,
-              tooltip: 'Back',
+              tooltip: 'Home',
             ),
           ),
           body: Padding(

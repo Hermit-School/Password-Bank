@@ -37,7 +37,7 @@ class LoginPageState extends State<LoginPage> {
                 );
               },
               icon: Icon(Icons.arrow_back),
-              tooltip: 'Back',
+              tooltip: 'Home',
               color: Colors.white,
             ),
           ),
