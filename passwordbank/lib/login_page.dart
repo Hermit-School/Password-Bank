@@ -8,8 +8,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  String _email = 'enter email here';
-  String _password = 'enter password here';
+  String email = 'enter email here';
+  String password = 'enter password here';
   Color buttonColor = Colors.white;
 
   @override
@@ -67,7 +67,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        _email = value;
+                        email = value;
                       });
                     },
                   ),
@@ -88,7 +88,7 @@ class LoginPageState extends State<LoginPage> {
                     ),
                     onChanged: (value) {
                       setState(() {
-                        _password = value;
+                        password = value;
                       });
                     },
                   ),

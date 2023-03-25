@@ -9,7 +9,7 @@ import 'new_user.dart';
 
 // class _AuthScreenState extends State<AuthScreen> {
 //   bool _isLogin = true;
-//   String _email = 'email';
+//   String email = 'email';
 //   String _password = 'password';
 
 //   void _submitForm() {
@@ -43,7 +43,7 @@ import 'new_user.dart';
 //                 keyboardType: TextInputType.emailAddress,
 //                 onChanged: (value) {
 //                   setState(() {
-//                     _email = value;
+//                     email = value;
 //                   });
 //                 },
 //               ),
