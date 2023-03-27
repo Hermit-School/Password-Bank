@@ -42,9 +42,12 @@ class SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset(
-              'assets/images/lockedcloud.png',
-              width: 200.0,
+            SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(),
+              child: Image.asset(
+                'assets/images/lockedcloud.png',
+                width: 200.0,
+              ),
             ),
             SizedBox(height: 50.0),
             Text(

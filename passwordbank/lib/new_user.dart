@@ -19,6 +19,7 @@ class SignupPageState extends State<SignupPage> {
   String phoneNumber = '';
   TextEditingController dateInput = TextEditingController();
   bool captchaValidation = false;
+  TextEditingController controller = TextEditingController();
 
   Color buttonColor = Colors.white;
 
@@ -49,6 +50,7 @@ class SignupPageState extends State<SignupPage> {
                   fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
           leading: IconButton(
             onPressed: () {
+              controller.clear();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => AuthScreen()),

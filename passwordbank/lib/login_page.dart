@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:resume_view/forgot_password.dart';
 import 'auth_screen.dart';
 import 'password_data.dart';
+import 'forgot_password.dart';
 //import 'login_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +14,7 @@ class LoginPageState extends State<LoginPage> {
   String email = 'enter email here';
   String password = 'enter password here';
   Color buttonColor = Colors.white;
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,7 @@ class LoginPageState extends State<LoginPage> {
                     fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
             leading: IconButton(
               onPressed: () {
+                controller.clear();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AuthScreen()),
@@ -54,7 +58,9 @@ class LoginPageState extends State<LoginPage> {
                         fontFamily: 'Montserrat',
                         color: Colors.white,
                       )),
-                  SizedBox(height: 50),
+                  SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(height: 50)),
                   TextField(
                     style: TextStyle(color: Colors.white),
                     decoration: InputDecoration(
@@ -94,7 +100,45 @@ class LoginPageState extends State<LoginPage> {
                     },
                   ),
                   SizedBox(
-                    height: 50.0,
+                    height: 20.0,
+                  ),
+                  // InkWell(
+                  //     // child: Container(
+                  //     //     color: Color(0xFFFACB1B),
+                  //     //     width: 150,
+                  //     //     height: 30,
+                  //     child: Center(
+                  //         child: Text('Forgot Password?',
+                  //             style: TextStyle(
+                  //               color: Color(0xFF692E19),
+                  //             ))),
+                  //     // ),
+                  //     onTap: () {
+                  //       // setState(() {
+                  //       ForgotPasswordPage();
+                  //     }),
+                  // // },
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        textStyle: const TextStyle(
+                            fontSize: 20,
+                            fontFamily: 'Montserrat',
+                            decoration: TextDecoration.underline),
+                        foregroundColor: Color(0xFF8F4024)),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage()),
+                      );
+                    },
+                    child: const Text(
+                      'Forgot Password?',
+                      selectionColor: Colors.white,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30.0,
                   ),
                   ElevatedButton(
                     onPressed: () {
