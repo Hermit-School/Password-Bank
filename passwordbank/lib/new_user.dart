@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'auth_screen.dart';
+import 'password_data.dart';
 //import 'package:flutter_captcha/flutter_captcha.dart';
-
-import 'package:flutter/material.dart';
 
 class SignupPage extends StatefulWidget {
   @override
@@ -165,7 +164,11 @@ class SignupPageState extends State<SignupPage> {
                   SizedBox(height: 50.0),
                   ElevatedButton(
                     onPressed: () {
-                      // Your login code here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PasswordHomePage()),
+                      );
                     },
                     style: ButtonStyle(
                       foregroundColor:

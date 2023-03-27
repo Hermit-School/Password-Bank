@@ -83,6 +83,7 @@ import 'new_user.dart';
 
 // import 'package:flutter/material.dart';
 // import 'login_page.dart';
+void main() => runApp(AuthScreen());
 
 class AuthScreen extends StatefulWidget {
   @override

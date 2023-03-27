@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'auth_screen.dart';
+import 'password_data.dart';
 //import 'login_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -97,7 +98,11 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      // Your login code here
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PasswordHomePage()),
+                      );
                     },
                     style: ButtonStyle(
                       foregroundColor:
