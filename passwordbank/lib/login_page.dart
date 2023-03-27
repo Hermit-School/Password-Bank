@@ -98,11 +98,11 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PasswordHomePage()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => PasswordHomePage()),
+                      // );
                     },
                     style: ButtonStyle(
                       foregroundColor:

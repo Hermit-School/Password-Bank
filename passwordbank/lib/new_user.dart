@@ -164,11 +164,11 @@ class SignupPageState extends State<SignupPage> {
                   SizedBox(height: 50.0),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PasswordHomePage()),
-                      );
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => PasswordHomePage()),
+                      // );
                     },
                     style: ButtonStyle(
                       foregroundColor:
