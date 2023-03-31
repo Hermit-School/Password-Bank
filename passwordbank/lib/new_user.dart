@@ -463,42 +463,57 @@ class SignupPageState extends State<SignupPage> {
                           //       });
                           //     }),
                           // SizedBox(height: 50.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   const SnackBar(
-                                //       content: Text('Processing Data')),
+                          Builder(builder: (BuildContext context) {
+                            return ElevatedButton(
+                              onPressed: () {
+                                if (formKey.currentState!.validate()) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Saving ...',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Montserrat',
+                                              color: Color(0xFF692E19))),
+                                      duration: Duration(seconds: 2),
+                                      backgroundColor: Color(0xFFDBF4F4),
+                                    ),
+                                  );
+                                  // ScaffoldMessenger.of(context).showSnackBar(
+                                  //   const SnackBar(
+                                  //       content: Text('Processing Data')),
+                                  // );
+                                }
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => PasswordHomePage()),
                                 // );
-                              }
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => PasswordHomePage()),
-                              // );
-                            },
-                            style: ButtonStyle(
-                              foregroundColor:
-                                  MaterialStateProperty.all(Color(0xFF32BEA6)),
-                              backgroundColor:
-                                  MaterialStateProperty.resolveWith<Color>(
-                                (states) {
-                                  if (states.contains(MaterialState.pressed)) {
-                                    return Color(
-                                        0xFFFACB1B); // The button color when it's pressed
-                                  } else {
-                                    return buttonColor; // The button color when it's not pressed
-                                  }
-                                },
+                              },
+                              style: ButtonStyle(
+                                foregroundColor: MaterialStateProperty.all(
+                                    Color(0xFF32BEA6)),
+                                backgroundColor:
+                                    MaterialStateProperty.resolveWith<Color>(
+                                  (states) {
+                                    if (states
+                                        .contains(MaterialState.pressed)) {
+                                      return Color(
+                                          0xFFFACB1B); // The button color when it's pressed
+                                    } else {
+                                      return buttonColor; // The button color when it's not pressed
+                                    }
+                                  },
+                                ),
                               ),
-                            ),
-                            child: Text('Create Account',
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat',
-                                )),
-                          ),
+                              child: Text('Create Account',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: 'Montserrat',
+                                  )),
+                            );
+                          }),
                         ],
                       ),
                     ))),

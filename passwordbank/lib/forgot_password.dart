@@ -232,44 +232,59 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 SizedBox(
                                   height: 50.0,
                                 ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    if (formKey.currentState!.validate()) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                            content: Text('Processing Data')),
-                                      );
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => LoginPage()),
-                                      );
-                                    }
-                                  },
-                                  style: ButtonStyle(
-                                    foregroundColor: MaterialStateProperty.all(
-                                        Color(0xFF32BEA6)),
-                                    backgroundColor: MaterialStateProperty
-                                        .resolveWith<Color>(
-                                      (states) {
-                                        if (states
-                                            .contains(MaterialState.pressed)) {
-                                          return Color(
-                                              0xFFFACB1B); // The button color when it's pressed
-                                        } else {
-                                          return buttonColor; // The button color when it's not pressed
-                                        }
-                                      },
+                                Builder(builder: (BuildContext context) {
+                                  return ElevatedButton(
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text('Updating ...',
+                                                style: TextStyle(
+                                                    fontSize: 20.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontFamily: 'Montserrat',
+                                                    color: Color(0xFF692E19))),
+                                            duration: Duration(seconds: 1),
+                                            backgroundColor: Color(0xFFDBF4F4),
+                                          ),
+                                        );
+                                        Future.delayed(Duration(seconds: 1),
+                                            () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage()),
+                                          );
+                                        });
+                                      }
+                                    },
+                                    style: ButtonStyle(
+                                      foregroundColor:
+                                          MaterialStateProperty.all(
+                                              Color(0xFF32BEA6)),
+                                      backgroundColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (states) {
+                                          if (states.contains(
+                                              MaterialState.pressed)) {
+                                            return Color(
+                                                0xFFFACB1B); // The button color when it's pressed
+                                          } else {
+                                            return buttonColor; // The button color when it's not pressed
+                                          }
+                                        },
+                                      ),
                                     ),
-                                  ),
-                                  child: Text("Submit",
-                                      style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'Montserrat',
-                                      )),
-                                )
+                                    child: Text("Submit",
+                                        style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Montserrat',
+                                        )),
+                                  );
+                                })
                               ] //children
                               ),
                         )) //singlechild

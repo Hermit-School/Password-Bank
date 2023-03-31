@@ -187,42 +187,52 @@ class LoginPageState extends State<LoginPage> {
                         SizedBox(
                           height: 30.0,
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Validate returns true if the form is valid, or false otherwise.
+                        Builder(builder: (BuildContext context) {
+                          return ElevatedButton(
+                            onPressed: () {
+                              // Validate returns true if the form is valid, or false otherwise.
 
-                            if (formKey.currentState!.validate()) {
-                              // If the form is valid, display a snackbar. In the real world,
-                              // you'd often call a server or save the information in a database.
+                              if (formKey.currentState!.validate()) {
+                                // If the form is valid, display a snackbar. In the real world,
+                                // you'd often call a server or save the information in a database.
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Processing Data')),
-                              );
-                            }
-                          },
-                          style: ButtonStyle(
-                            foregroundColor:
-                                MaterialStateProperty.all(Color(0xFF32BEA6)),
-                            backgroundColor:
-                                MaterialStateProperty.resolveWith<Color>(
-                              (states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return Color(
-                                      0xFFFACB1B); // The button color when it's pressed
-                                } else {
-                                  return buttonColor; // The button color when it's not pressed
-                                }
-                              },
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Signing in ...',
+                                        style: TextStyle(
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: 'Montserrat',
+                                            color: Color(0xFF692E19))),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: Color(0xFFDBF4F4),
+                                  ),
+                                );
+                              }
+                            },
+                            style: ButtonStyle(
+                              foregroundColor:
+                                  MaterialStateProperty.all(Color(0xFF32BEA6)),
+                              backgroundColor:
+                                  MaterialStateProperty.resolveWith<Color>(
+                                (states) {
+                                  if (states.contains(MaterialState.pressed)) {
+                                    return Color(
+                                        0xFFFACB1B); // The button color when it's pressed
+                                  } else {
+                                    return buttonColor; // The button color when it's not pressed
+                                  }
+                                },
+                              ),
                             ),
-                          ),
-                          child: const Text('Sign-in',
-                              style: TextStyle(
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Montserrat',
-                              )),
-                        ),
+                            child: const Text('Sign-in',
+                                style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat',
+                                )),
+                          );
+                        }),
                       ],
                     ),
                   )),
