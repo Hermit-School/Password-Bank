@@ -42,34 +42,36 @@ class SplashScreenState extends State<SplashScreen> {
       child: Scaffold(
         backgroundColor: Color(0xFF32BEA6),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Image.asset(
-                  'assets/images/lockedcloud.png',
-                  width: 200.0,
-                ),
+          child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset(
+                    'assets/images/lockedcloud.png',
+                    width: 200.0,
+                  ),
+                  SizedBox(height: 50.0),
+                  Text(
+                    'Password Bank',
+                    style: TextStyle(
+                      fontSize: 40.0,
+                      //fontWeight: FontWeight.normal,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'Montserrat',
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: 180.0),
+                  SpinKitFoldingCube(
+                    color: Colors.white,
+                    size: 50.0,
+                  ),
+                  //CircularProgressIndicator(),
+                ],
               ),
-              SizedBox(height: 50.0),
-              Text(
-                'Password Bank',
-                style: TextStyle(
-                  fontSize: 40.0,
-                  //fontWeight: FontWeight.normal,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat',
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(height: 180.0),
-              SpinKitFoldingCube(
-                color: Colors.white,
-                size: 50.0,
-              ),
-              //CircularProgressIndicator(),
-            ],
+            ),
           ),
         ),
       ),
