@@ -14,6 +14,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
   String newPassword = '';
   String repeatNewPassword = '';
   Color buttonColor = Colors.white;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,179 +25,229 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
             color: Color(0xFFFACB1B),
           ),
         ),
-        home: Scaffold(
-          backgroundColor: Color(0xFF32BEA6),
-          appBar: AppBar(
-            centerTitle: true,
-            foregroundColor: Color(0xFFFFFFFF),
-            title: Text("Change Password",
-                style: TextStyle(
-                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
-            leading: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
-              icon: Icon(Icons.arrow_back),
-              tooltip: 'Home',
-              color: Colors.white,
+        home: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            backgroundColor: Color(0xFF32BEA6),
+            appBar: AppBar(
+              centerTitle: true,
+              foregroundColor: Color(0xFFFFFFFF),
+              title: Text("Change Password",
+                  style: TextStyle(
+                      fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
+              leading: IconButton(
+                onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                icon: Icon(Icons.arrow_back),
+                tooltip: 'Home',
+                color: Colors.white,
+              ),
             ),
-          ),
-          body: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.all(30.0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    // Text('Change Password',
-                    //     style: TextStyle(
-                    //       fontSize: 30.0,
-                    //       fontWeight: FontWeight.bold,
-                    //       fontFamily: 'Montserrat',
-                    //       color: Colors.white,
-                    //     )),
-                    // SizedBox(height: 50),
-                    TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFFACB1B))),
-                        labelText: "Email",
-                        labelStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF818284)),
-                        ),
+            body: Form(
+              key: formKey,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SingleChildScrollView(
+                        physics: AlwaysScrollableScrollPhysics(),
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          email = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    TextField(
-                      style: TextStyle(color: Colors.white),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFFACB1B))),
-                        labelText: "Enter OTP",
-                        labelStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF818284)),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          otp = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFFACB1B))),
-                        labelText: "New Password",
-                        labelStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF818284)),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          newPassword = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    TextField(
-                      style: TextStyle(color: Colors.white),
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFFFACB1B))),
-                        labelText: "Re-enter New Password",
-                        labelStyle: TextStyle(color: Colors.white),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Color(0xFF818284)),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        // code to verify newPassword == repeatNewPassword else error
-                        setState(() {
-                          repeatNewPassword = value;
-                        });
-                      },
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    if (newPassword == '' || repeatNewPassword == '')
-                      Text('')
-                    else if (newPassword == repeatNewPassword)
-                      Text(
-                        'Passwords match',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                          color: Color(0xFF05594A),
-                        ),
-                      )
-                    else if (newPassword != '' || repeatNewPassword != '')
-                      Text(
-                        'Passwords do not match!',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'Montserrat',
-                          color: Colors.red,
-                        ),
-                      ),
-                    // else
-                    //   Text(''),
-                    SizedBox(
-                      height: 50.0,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Code to display snackbar Password changed successfully! with button to route back to LoginPage()
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-                      },
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all(Color(0xFF32BEA6)),
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return Color(
-                                  0xFFFACB1B); // The button color when it's pressed
-                            } else {
-                              return buttonColor; // The button color when it's not pressed
+                      TextFormField(
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "Email",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'E-mail cannot be blank';
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return 'Invalid e-mail address';
                             }
+                            return null;
                           },
-                        ),
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
+                          }),
+                      SizedBox(
+                        height: 16.0,
                       ),
-                      child: Text("Submit",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                          )),
-                    ),
-                  ]),
+                      TextFormField(
+                          style: TextStyle(color: Colors.white),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Color(0xFFFACB1B))),
+                            labelText: "Enter OTP",
+                            labelStyle: TextStyle(color: Colors.white),
+                            errorStyle: TextStyle(
+                                color: Colors.red,
+                                fontFamily: 'Montserrat',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFF818284)),
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'OTP cannot be blank';
+                            } else if (value.length < 6) {
+                              return 'Enter valid OTP';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              otp = value;
+                            });
+                          }),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextFormField(
+                          style: TextStyle(color: Colors.white),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "New Password",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password cannot be blank';
+                            } else if (value.length < 8) {
+                              return 'Password must be at least 8 characters long';
+                            } else if (!RegExp(
+                                    r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                .hasMatch(value)) {
+                              return 'Password must comply with the requirements';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              newPassword = value;
+                            });
+                          }),
+                      SizedBox(
+                        height: 16.0,
+                      ),
+                      TextFormField(
+                          // scrollPadding: EdgeInsets.all(16.0),
+                          style: TextStyle(color: Colors.white),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "Re-enter Password",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password cannot be blank';
+                            } else if (value.length < 8) {
+                              return 'Password must be at least 8 characters long';
+                            } else if (!RegExp(
+                                    r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                .hasMatch(value)) {
+                              return 'Password must comply with the requirements';
+                            } else if (newPassword != repeatNewPassword) {
+                              return 'Passwords do not match!';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              repeatNewPassword = value;
+                            });
+                          }),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      //
+                      // else
+                      //   Text(''),
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data')),
+                            );
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()),
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all(Color(0xFF32BEA6)),
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Color(
+                                    0xFFFACB1B); // The button color when it's pressed
+                              } else {
+                                return buttonColor; // The button color when it's not pressed
+                              }
+                            },
+                          ),
+                        ),
+                        child: Text("Submit",
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            )),
+                      ),
+                    ]),
+              ),
             ),
           ),
         ));

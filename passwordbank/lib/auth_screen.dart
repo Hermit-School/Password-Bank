@@ -107,101 +107,106 @@ class AuthScreenState extends State<AuthScreen> {
         //     color: Color(0xFFFACB1B),
         //   ),
         // ),
-        home: Scaffold(
-      backgroundColor: Color(0xFF32BEA6),
-      // appBar: AppBar(
-      //   title: Text('Account options',
-      //       style: TextStyle(
-      //           fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
-      //   centerTitle: true,
-      //   foregroundColor: Color(0xFFFFFFFF),
-      // ),
-      body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-            Container(
-              margin: const EdgeInsets.all(20),
-              child: Image(
-                width: 200,
-                image: AssetImage('assets/images/lockedcloud.png'),
-              ),
-            ),
-            SizedBox(height: 30.0),
-            Text(
-              'Password Bank',
-              style: TextStyle(
-                fontSize: 40.0,
-                //fontWeight: FontWeight.normal,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Montserrat',
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 200.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                    );
-                  },
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all(Color(0xFF32BEA6)),
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Color(
-                              0xFFFACB1B); // The button color when it's pressed
-                        } else {
-                          return buttonColor; // The button color when it's not pressed
-                        }
-                      },
-                    ),
-                  ),
-                  child: Text('Sign-in',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                      )),
+        home: GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xFF32BEA6),
+        // appBar: AppBar(
+        //   title: Text('Account options',
+        //       style: TextStyle(
+        //           fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
+        //   centerTitle: true,
+        //   foregroundColor: Color(0xFFFFFFFF),
+        // ),
+        body: Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+              Container(
+                margin: const EdgeInsets.all(20),
+                child: Image(
+                  width: 200,
+                  image: AssetImage('assets/images/lockedcloud.png'),
                 ),
-                SizedBox(width: 30),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignupPage()),
-                    );
-                  },
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all(Color(0xFF32BEA6)),
-                    backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      (states) {
-                        if (states.contains(MaterialState.pressed)) {
-                          return Color(
-                              0xFFFACB1B); // The button color when it's pressed
-                        } else {
-                          return buttonColor; // The button color when it's not pressed
-                        }
-                      },
-                    ),
-                  ),
-                  child: Text('Sign-up',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'Montserrat',
-                      )),
+              ),
+              SizedBox(height: 30.0),
+              Text(
+                'Password Bank',
+                style: TextStyle(
+                  fontSize: 40.0,
+                  //fontWeight: FontWeight.normal,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat',
+                  color: Colors.white,
                 ),
-              ],
-            ),
-          ])),
+              ),
+              SizedBox(height: 200.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all(Color(0xFF32BEA6)),
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Color(
+                                0xFFFACB1B); // The button color when it's pressed
+                          } else {
+                            return buttonColor; // The button color when it's not pressed
+                          }
+                        },
+                      ),
+                    ),
+                    child: Text('Sign-in',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        )),
+                  ),
+                  SizedBox(width: 30),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignupPage()),
+                      );
+                    },
+                    style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all(Color(0xFF32BEA6)),
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Color(
+                                0xFFFACB1B); // The button color when it's pressed
+                          } else {
+                            return buttonColor; // The button color when it's not pressed
+                          }
+                        },
+                      ),
+                    ),
+                    child: Text('Sign-up',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Montserrat',
+                        )),
+                  ),
+                ],
+              ),
+            ])),
+      ),
     ));
   }
 }

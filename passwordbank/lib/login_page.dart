@@ -1,15 +1,28 @@
-import 'package:flutter/material.dart';
 import 'package:resume_view/forgot_password.dart';
 import 'auth_screen.dart';
-// import 'password_data.dart';
 import 'forgot_password.dart';
+import 'package:flutter/material.dart';
 
+// Define a custom Form widget.
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
-  State createState() => LoginPageState();
+  LoginPageState createState() {
+    return LoginPageState();
+  }
 }
 
+// Define a corresponding State class.
+// This class holds data related to the form.
+
 class LoginPageState extends State<LoginPage> {
+  // Create a global key that uniquely identifies the Form widget
+  // and allows validation of the form.
+  //
+  // Note: This is a `GlobalKey<FormState>`,
+  // not a GlobalKey<LoginPageState>.
+
   String email = 'enter email here';
   String password = 'enter password here';
   Color buttonColor = Colors.white;
@@ -18,6 +31,7 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Build a Form widget using the formKey created above.
     return MaterialApp(
         theme: ThemeData(
           appBarTheme: AppBarTheme(
@@ -25,203 +39,177 @@ class LoginPageState extends State<LoginPage> {
             color: Color(0xFFFACB1B),
           ),
         ),
-        home: Scaffold(
-          backgroundColor: Color(0xFF32BEA6),
-          appBar: AppBar(
-            centerTitle: true,
-            foregroundColor: Color(0xFFFFFFFF),
-            title: Text("Sign-in",
-                style: TextStyle(
-                    fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
-            leading: IconButton(
-              onPressed: () {
-                controller.clear();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AuthScreen()),
-                );
-              },
-              icon: Icon(Icons.arrow_back),
-              tooltip: 'Home',
-              color: Colors.white,
+        home: GestureDetector(
+          onTap: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
+          child: Scaffold(
+            backgroundColor: Color(0xFF32BEA6),
+            appBar: AppBar(
+              centerTitle: true,
+              foregroundColor: Color(0xFFFFFFFF),
+              title: Text("Sign-in",
+                  style: TextStyle(
+                      fontFamily: 'Montserrat', fontWeight: FontWeight.bold)),
+              leading: IconButton(
+                onPressed: () {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  controller.clear();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AuthScreen()),
+                  );
+                },
+                icon: Icon(Icons.arrow_back),
+                tooltip: 'Home',
+                color: Colors.white,
+              ),
             ),
-          ),
-          body: Form(
-            key: formKey,
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text('Welcome back!',
-                        style: TextStyle(
-                          fontSize: 30.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Montserrat',
-                          color: Colors.white,
-                        )),
-                    SingleChildScrollView(
+            body: Form(
+              key: formKey,
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
-                        child: SizedBox(height: 50)),
-                    TextField(
-                        style: TextStyle(color: Colors.white),
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFFACB1B))),
-                          labelText: "Email",
-                          labelStyle: TextStyle(color: Colors.white),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF818284)),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            email = value;
-                          });
-                          validator:
-                          (value) {
-                            if (value.isEmpty) {
-                              return 'E-mail cannot be empty!';
+                      ),
+                      Text('Welcome back!',
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Montserrat',
+                            color: Colors.white,
+                          )),
+                      TextFormField(
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "Email",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'E-mail cannot be blank';
                             } else if (!RegExp(
                                     r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(value)) {
                               return 'Invalid e-mail address';
                             }
                             return null;
-                          };
-                        }),
-                    SizedBox(
-                      height: 16.0,
-                    ),
-                    TextField(
-                        style: TextStyle(color: Colors.white),
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Color(0xFFFACB1B))),
-                          labelText: "Password",
-                          labelStyle: TextStyle(color: Colors.white),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xFF818284)),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            password = value;
-                          });
-                          validator:
-                          (value) {
-                            if (value.isEmpty) {
-                              return 'Password cannot be empty';
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              email = value;
+                            });
+                          }),
+                      TextFormField(
+                          // scrollPadding: EdgeInsets.all(16.0),
+                          style: TextStyle(color: Colors.white),
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "Password",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password cannot be blank';
                             } else if (value.length < 8) {
                               return 'Password must be at least 8 characters long';
+                            } else if (!RegExp(
+                                    r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                .hasMatch(value)) {
+                              return 'Password must comply with the requirements';
                             }
                             return null;
-                          };
-                        }),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    // InkWell(
-                    //     // child: Container(
-                    //     //     color: Color(0xFFFACB1B),
-                    //     //     width: 150,
-                    //     //     height: 30,
-                    //     child: Center(
-                    //         child: Text('Forgot Password?',
-                    //             style: TextStyle(
-                    //               color: Color(0xFF692E19),
-                    //             ))),
-                    //     // ),
-                    //     onTap: () {
-                    //       // setState(() {
-                    //       ForgotPasswordPage();
-                    //     }),
-                    // // },
-                    TextButton(
-                      style: TextButton.styleFrom(
-                          textStyle: const TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'Montserrat',
-                              decoration: TextDecoration.underline),
-                          foregroundColor: Color(0xFF8F4024)),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ForgotPasswordPage()),
-                        );
-                      },
-                      child: const Text(
-                        'Forgot Password?',
-                        selectionColor: Colors.white,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 30.0,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState != null &&
-                            formKey.currentState!.validate()) {
-                          SizedBox(
-                            height: 30.0,
-                          );
-                          Text(
-                            'Processing Data',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Montserrat',
-                                color: Colors.white),
-                          );
-                          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          //   content: Text('Processing Data'),
-                          //   duration: Duration(seconds: 1),
-                          //   action: SnackBarAction(
-                          //     label: 'Enter!',
-                          //     onPressed: () {},
-                          //   ),
-                          // ));
-                        } else if (formKey.currentState == null ||
-                            formKey.toString().isEmpty) {
-                          Text(
-                            'Email can\'t be empty',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontFamily: 'Montserrat',
-                                color: Colors.white),
-                          );
-                        }
-
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //       builder: (context) => PasswordHomePage()),
-                        // );
-                      },
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all(Color(0xFF32BEA6)),
-                        backgroundColor:
-                            MaterialStateProperty.resolveWith<Color>(
-                          (states) {
-                            if (states.contains(MaterialState.pressed)) {
-                              return Color(
-                                  0xFFFACB1B); // The button color when it's pressed
-                            } else {
-                              return buttonColor; // The button color when it's not pressed
-                            }
                           },
+                          onChanged: (value) {
+                            setState(() {
+                              password = value;
+                            });
+                          }),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                            textStyle: const TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'Montserrat',
+                                decoration: TextDecoration.underline),
+                            foregroundColor: Color(0xFF8F4024)),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ForgotPasswordPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Forgot Password?',
+                          selectionColor: Colors.white,
                         ),
                       ),
-                      child: Text("Sign-In",
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Montserrat',
-                          )),
-                    ),
-                  ]),
+                      SizedBox(
+                        height: 30.0,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Validate returns true if the form is valid, or false otherwise.
+
+                          if (formKey.currentState!.validate()) {
+                            // If the form is valid, display a snackbar. In the real world,
+                            // you'd often call a server or save the information in a database.
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data')),
+                            );
+                          }
+                        },
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all(Color(0xFF32BEA6)),
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (states) {
+                              if (states.contains(MaterialState.pressed)) {
+                                return Color(
+                                    0xFFFACB1B); // The button color when it's pressed
+                              } else {
+                                return buttonColor; // The button color when it's not pressed
+                              }
+                            },
+                          ),
+                        ),
+                        child: const Text('Sign-in',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Montserrat',
+                            )),
+                      ),
+                    ]),
+              ),
             ),
           ),
         ));
