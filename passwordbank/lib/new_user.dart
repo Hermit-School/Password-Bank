@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'auth_screen.dart';
@@ -15,6 +13,7 @@ class SignupPage extends StatefulWidget {
 class SignupPageState extends State<SignupPage> {
   final ScrollController firstController = ScrollController();
   final formKey = GlobalKey<FormState>();
+  String username = '';
   String firstName = '';
   String lastName = '';
   String email = '';
@@ -84,15 +83,15 @@ class SignupPageState extends State<SignupPage> {
                   },
                   color: Colors.white,
                 ),
-                IconButton(
-                  icon: Icon(Icons.refresh),
-                  tooltip: 'Reset form',
-                  onPressed: () {
-                    controller.clear();
-                    formKey.currentState?.reset();
-                  },
-                  color: Colors.white,
-                ),
+                // IconButton(
+                //   icon: Icon(Icons.refresh),
+                //   tooltip: 'Reset form',
+                //   onPressed: () {
+                //     controller.clear();
+                //     formKey.currentState?.reset();
+                //   },
+                //   color: Colors.white,
+                // ),
               ],
             ),
             body: Form(
@@ -105,6 +104,40 @@ class SignupPageState extends State<SignupPage> {
                       SingleChildScrollView(
                         physics: AlwaysScrollableScrollPhysics(),
                       ),
+                      TextFormField(
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.alternate_email,
+                                color: Color(0xFFDBF4F4),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "Username",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Username cannot be blank';
+                            } else if (!RegExp(r"^[A-Za-z][A-Za-z0-9_]{7,29}$")
+                                .hasMatch(value)) {
+                              return 'Invalid entry';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              username = value;
+                            });
+                          }),
                       TextFormField(
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
@@ -171,6 +204,40 @@ class SignupPageState extends State<SignupPage> {
                           onChanged: (value) {
                             setState(() {
                               lastName = value;
+                            });
+                          }),
+                      TextFormField(
+                          style: TextStyle(color: Colors.white),
+                          decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.numbers,
+                                color: Color(0xFFDBF4F4),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFFACB1B))),
+                              labelText: "Cell Number",
+                              labelStyle: TextStyle(color: Colors.white),
+                              errorStyle: TextStyle(
+                                  color: Colors.red,
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF818284)))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Cell number cannot be blank';
+                            } else if (!RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)')
+                                .hasMatch(value)) {
+                              return 'Invalid entry';
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              phoneNumber = value;
                             });
                           }),
                       TextFormField(

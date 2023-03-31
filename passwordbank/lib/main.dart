@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'auth_screen.dart';
-//import 'new_user.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() => runApp(MyApp());

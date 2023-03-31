@@ -1,6 +1,5 @@
-import 'package:resume_view/forgot_password.dart';
-import 'auth_screen.dart';
 import 'forgot_password.dart';
+import 'auth_screen.dart';
 import 'package:flutter/material.dart';
 
 // Define a custom Form widget.
@@ -23,8 +22,8 @@ class LoginPageState extends State<LoginPage> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<LoginPageState>.
 
-  String email = 'enter email here';
-  String password = 'enter password here';
+  String username = '';
+  String password = '';
   Color buttonColor = Colors.white;
   TextEditingController controller = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -82,13 +81,18 @@ class LoginPageState extends State<LoginPage> {
                             fontFamily: 'Montserrat',
                             color: Colors.white,
                           )),
+                      SizedBox(height: 50),
                       TextFormField(
                           style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.alternate_email,
+                                color: Color(0xFFDBF4F4),
+                              ),
                               enabledBorder: UnderlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Color(0xFFFACB1B))),
-                              labelText: "Email",
+                              labelText: "Username",
                               labelStyle: TextStyle(color: Colors.white),
                               errorStyle: TextStyle(
                                   color: Colors.red,
@@ -100,17 +104,21 @@ class LoginPageState extends State<LoginPage> {
                                       BorderSide(color: Color(0xFF818284)))),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'E-mail cannot be blank';
-                            } else if (!RegExp(
-                                    r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                .hasMatch(value)) {
-                              return 'Invalid e-mail address';
+                              return 'Username cannot be blank';
+                            } else if (!RegExp(r"^[A-Za-z][A-Za-z0-9_]{7,29}$")
+                                    .hasMatch(value)
+                                //      ||
+                                // (!RegExp(
+                                //         r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                //     .hasMatch(value))
+                                ) {
+                              return 'Invalid Username';
                             }
                             return null;
                           },
                           onChanged: (value) {
                             setState(() {
-                              email = value;
+                              username = value;
                             });
                           }),
                       TextFormField(
@@ -118,6 +126,10 @@ class LoginPageState extends State<LoginPage> {
                           style: TextStyle(color: Colors.white),
                           obscureText: true,
                           decoration: InputDecoration(
+                              icon: Icon(
+                                Icons.lock_outline,
+                                color: Color(0xFFDBF4F4),
+                              ),
                               enabledBorder: UnderlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Color(0xFFFACB1B))),
