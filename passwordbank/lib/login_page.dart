@@ -3,19 +3,19 @@ import 'auth_screen.dart';
 import 'package:flutter/material.dart';
 
 // Define a custom Form widget.
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SSOLogin extends StatefulWidget {
+  const SSOLogin({super.key});
 
   @override
-  LoginPageState createState() {
-    return LoginPageState();
+  SSOLoginState createState() {
+    return SSOLoginState();
   }
 }
 
 // Define a corresponding State class.
 // This class holds data related to the form.
 
-class LoginPageState extends State<LoginPage> {
+class SSOLoginState extends State<SSOLogin> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -83,85 +83,110 @@ class LoginPageState extends State<LoginPage> {
                               color: Colors.white,
                             )),
                         SizedBox(height: 50),
-                        TextFormField(
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                                icon: Icon(
-                                  Icons.alternate_email,
-                                  color: Color(0xFFDBF4F4),
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFFFACB1B))),
-                                labelText: "Username",
-                                labelStyle: TextStyle(color: Colors.white),
-                                errorStyle: TextStyle(
-                                    color: Colors.red,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFF818284)))),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Username cannot be blank';
-                              } else if (!RegExp(
-                                          r"^(?![0-9])[A-Za-z][A-Za-z0-9_]{7,29}$")
-                                      .hasMatch(value)
-                                  //      ||
-                                  // (!RegExp(
-                                  //         r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                  //     .hasMatch(value))
-                                  ) {
-                                return 'Invalid Username';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                username = value;
-                              });
-                            }),
-                        TextFormField(
-                            // scrollPadding: EdgeInsets.all(16.0),
-                            style: TextStyle(color: Colors.white),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                icon: Icon(
-                                  Icons.lock_outline,
-                                  color: Color(0xFFDBF4F4),
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFFFACB1B))),
-                                labelText: "Password",
-                                labelStyle: TextStyle(color: Colors.white),
-                                errorStyle: TextStyle(
-                                    color: Colors.red,
-                                    fontFamily: 'Montserrat',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                                focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFF818284)))),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Password cannot be blank';
-                              } else if (value.length < 8) {
-                                return 'Password must be at least 8 characters long';
-                              } else if (RegExp(
-                                      r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
-                                  .hasMatch(value)) {
-                                return 'Password must comply with requirements';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) {
-                              setState(() {
-                                password = value;
-                              });
-                            }),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                              controller: controller,
+                              cursorColor: Color(0xFF818284),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 20,
+                              ),
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.alternate_email,
+                                    color: Colors.white,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xFFFACB1B))),
+                                  hintText: 'Enter Username',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Montserrat'),
+                                  // labelText: "Username",
+                                  // labelStyle: TextStyle(color: Colors.white),
+                                  errorStyle: TextStyle(
+                                      color: Colors.red,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color(0xFF818284)))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Username cannot be blank';
+                                } else if (!RegExp(
+                                            r"^(?![0-9])[A-Za-z][A-Za-z0-9_]{7,29}$")
+                                        .hasMatch(value)
+                                    //      ||
+                                    // (!RegExp(
+                                    //         r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    //     .hasMatch(value))
+                                    ) {
+                                  return 'Invalid Username';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  username = value;
+                                });
+                              }),
+                        ),
+                        SizedBox(height: 30),
+                        SizedBox(
+                          width: 300,
+                          child: TextFormField(
+                              cursorColor: Color(0xFF818284),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Montserrat',
+                                fontSize: 20,
+                              ),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  prefixIcon: Icon(
+                                    Icons.lock_outline,
+                                    color: Colors.white,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Color(0xFFFACB1B))),
+                                  hintText: 'Enter Password',
+                                  hintStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Montserrat'),
+                                  // labelText: "Password",
+                                  // labelStyle: TextStyle(color: Colors.white),
+                                  errorStyle: TextStyle(
+                                      color: Colors.red,
+                                      fontFamily: 'Montserrat',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Color(0xFF818284)))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Password cannot be blank';
+                                } else if (value.length < 8) {
+                                  return 'Password must be at least 8 characters long';
+                                } else if (RegExp(
+                                        r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                    .hasMatch(value)) {
+                                  return 'Password must comply with requirements';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) {
+                                setState(() {
+                                  password = value;
+                                });
+                              }),
+                        ),
                         SizedBox(
                           height: 20.0,
                         ),

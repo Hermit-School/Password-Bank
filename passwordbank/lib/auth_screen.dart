@@ -152,7 +152,7 @@ class AuthScreenState extends State<AuthScreen> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => SSOLogin()),
                         );
                       },
                       style: ButtonStyle(

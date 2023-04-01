@@ -16,6 +16,10 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Color buttonColor = Colors.white;
   final formKey = GlobalKey<FormState>();
   TextEditingController controller = TextEditingController();
+  bool isEnabledOTP = false;
+  bool isEnabledPassword = false;
+  bool isEnabledRePassword = false;
+  final emailFormKey = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       FocusManager.instance.primaryFocus?.unfocus();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => SSOLogin()),
                       );
                     },
                     icon: Icon(Icons.arrow_back),
@@ -58,6 +62,11 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       tooltip: 'Reset form',
                       onPressed: () {
                         controller.clear();
+                        setState(() {
+                          isEnabledOTP = false;
+                          isEnabledPassword = false;
+                          isEnabledRePassword = false;
+                        });
                         formKey.currentState?.reset();
                       },
                       color: Colors.white,
@@ -74,86 +83,101 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                TextFormField(
-                                    style: TextStyle(color: Colors.white),
-                                    decoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFFFACB1B))),
-                                        labelText: "Email",
-                                        labelStyle:
-                                            TextStyle(color: Colors.white),
-                                        errorStyle: TextStyle(
-                                            color: Colors.red,
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF818284)))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'E-mail cannot be blank';
-                                      } else if (!RegExp(
-                                              r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                          .hasMatch(value)) {
-                                        return 'Invalid e-mail address';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(() {
-                                        email = value;
-                                      });
-                                    }),
-
                                 SizedBox(
-                                  height: 16.0,
-                                ),
-                                TextFormField(
-                                    style: TextStyle(color: Colors.white),
-                                    obscureText: true,
-                                    decoration: InputDecoration(
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: Color(0xFFFACB1B))),
-                                      labelText: "Enter OTP",
-                                      labelStyle:
-                                          TextStyle(color: Colors.white),
-                                      errorStyle: TextStyle(
-                                          color: Colors.red,
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w600),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFF818284)),
+                                  width: 300,
+                                  child: TextFormField(
+                                      key: emailFormKey,
+                                      cursorColor: Color(0xFF818284),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 17,
                                       ),
+                                      decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFFFACB1B))),
+                                          labelText: "Email",
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          errorStyle: TextStyle(
+                                              color: Colors.red,
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFF818284)))),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'E-mail cannot be blank';
+                                        } else if (!RegExp(
+                                                r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                            .hasMatch(value)) {
+                                          return 'Invalid e-mail address';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        setState(() {
+                                          email = value;
+                                        });
+                                      }),
+                                ),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if (emailFormKey.currentState!.validate()) {
+                                      setState(() {
+                                        isEnabledOTP = true;
+                                        isEnabledPassword = true;
+                                        isEnabledRePassword = true;
+                                      });
+                                    }
+                                  },
+                                  style: ButtonStyle(
+                                    foregroundColor: MaterialStateProperty.all(
+                                        Color(0xFF32BEA6)),
+                                    backgroundColor: MaterialStateProperty
+                                        .resolveWith<Color>(
+                                      (states) {
+                                        if (states
+                                            .contains(MaterialState.pressed)) {
+                                          return Color(
+                                              0xFFFACB1B); // The button color when it's pressed
+                                        } else {
+                                          return buttonColor; // The button color when it's not pressed
+                                        }
+                                      },
                                     ),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'OTP cannot be blank';
-                                      } else if (value.length < 6) {
-                                        return 'Enter valid OTP';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(() {
-                                        otp = value;
-                                      });
-                                    }),
+                                  ),
+                                  child: const Text('Send OTP',
+                                      style: TextStyle(
+                                          fontFamily: 'Montserrat',
+                                          fontSize: 18,
+                                          color: Color(0xFF32BEA6),
+                                          fontWeight: FontWeight.w600)),
+                                ),
                                 SizedBox(
                                   height: 16.0,
                                 ),
-                                TextFormField(
-                                    style: TextStyle(color: Colors.white),
-                                    obscureText: true,
-                                    decoration: InputDecoration(
+                                SizedBox(
+                                  width: 300,
+                                  child: TextFormField(
+                                      enabled: isEnabledOTP,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 17,
+                                      ),
+                                      obscureText: true,
+                                      decoration: InputDecoration(
                                         enabledBorder: UnderlineInputBorder(
                                             borderSide: BorderSide(
                                                 color: Color(0xFFFACB1B))),
-                                        labelText: "New Password",
+                                        labelText: "Enter OTP",
                                         labelStyle:
                                             TextStyle(color: Colors.white),
                                         errorStyle: TextStyle(
@@ -162,67 +186,120 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                             fontSize: 14,
                                             fontWeight: FontWeight.w600),
                                         focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF818284)))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Password cannot be blank';
-                                      } else if (value.length < 8) {
-                                        return 'Password must be at least 8 characters long';
-                                      } else if (RegExp(
-                                              r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
-                                          .hasMatch(value)) {
-                                        return 'Password must comply with the requirements';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(() {
-                                        newPassword = value;
-                                      });
-                                    }),
+                                          borderSide: BorderSide(
+                                              color: Color(0xFF818284)),
+                                        ),
+                                      ),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'OTP cannot be blank';
+                                        } else if (value.length < 6) {
+                                          return 'Enter valid OTP';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        setState(() {
+                                          otp = value;
+                                        });
+                                      }),
+                                ),
                                 SizedBox(
                                   height: 16.0,
                                 ),
-                                TextFormField(
-                                    // scrollPadding: EdgeInsets.all(16.0),
-                                    style: TextStyle(color: Colors.white),
-                                    obscureText: true,
-                                    decoration: InputDecoration(
-                                        enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFFFACB1B))),
-                                        labelText: "Re-enter Password",
-                                        labelStyle:
-                                            TextStyle(color: Colors.white),
-                                        errorStyle: TextStyle(
-                                            color: Colors.red,
-                                            fontFamily: 'Montserrat',
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0xFF818284)))),
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Password cannot be blank';
-                                      } else if (value.length < 8) {
-                                        return 'Password must be at least 8 characters long';
-                                      } else if (RegExp(
-                                              r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
-                                          .hasMatch(value)) {
-                                        return 'Password must comply with the requirements';
-                                      } else if (newPassword !=
-                                          repeatNewPassword) {
-                                        return 'Passwords do not match!';
-                                      }
-                                      return null;
-                                    },
-                                    onChanged: (value) {
-                                      setState(() {
-                                        repeatNewPassword = value;
-                                      });
-                                    }),
+                                SizedBox(
+                                  width: 300,
+                                  child: TextFormField(
+                                      enabled: isEnabledPassword,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 17,
+                                      ),
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFFFACB1B))),
+                                          labelText: "New Password",
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          errorStyle: TextStyle(
+                                              color: Colors.red,
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFF818284)))),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Password cannot be blank';
+                                        } else if (value.length < 8) {
+                                          return 'Password must be at least 8 characters long';
+                                        } else if (RegExp(
+                                                r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                            .hasMatch(value)) {
+                                          return 'Password must comply with the requirements';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        setState(() {
+                                          newPassword = value;
+                                        });
+                                      }),
+                                ),
+                                SizedBox(
+                                  height: 16.0,
+                                ),
+                                SizedBox(
+                                  width: 300,
+                                  child: TextFormField(
+                                      enabled: isEnabledRePassword,
+                                      // scrollPadding: EdgeInsets.all(16.0),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 17,
+                                      ),
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFFFACB1B))),
+                                          labelText: "Re-enter Password",
+                                          labelStyle:
+                                              TextStyle(color: Colors.white),
+                                          errorStyle: TextStyle(
+                                              color: Colors.red,
+                                              fontFamily: 'Montserrat',
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                          focusedBorder: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                  color: Color(0xFF818284)))),
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Password cannot be blank';
+                                        } else if (value.length < 8) {
+                                          return 'Password must be at least 8 characters long';
+                                        } else if (RegExp(
+                                                r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                            .hasMatch(value)) {
+                                          return 'Password must comply with the requirements';
+                                        } else if (newPassword !=
+                                            repeatNewPassword) {
+                                          return 'Passwords do not match!';
+                                        }
+                                        return null;
+                                      },
+                                      onChanged: (value) {
+                                        setState(() {
+                                          repeatNewPassword = value;
+                                        });
+                                      }),
+                                ),
                                 SizedBox(
                                   height: 30.0,
                                 ),
@@ -255,7 +332,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    LoginPage()),
+                                                    SSOLogin()),
                                           );
                                         });
                                       }
