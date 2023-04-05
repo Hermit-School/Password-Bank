@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 
 //void main() => runApp(ForgotPasswordPage());
+@override
+void initState() {
+  passwordVisible = true;
+  usernameController.clear();
+  passwordController.clear();
+}
 
 class ForgotPasswordPage extends StatefulWidget {
   @override
@@ -39,10 +45,12 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
               appBar: AppBar(
                   centerTitle: true,
                   foregroundColor: Color(0xFFFFFFFF),
-                  title: Text("Change Password",
-                      style: TextStyle(
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.bold)),
+                  title: Text(
+                    "Change Password",
+                    style: TextStyle(
+                        fontFamily: 'Montserrat', fontWeight: FontWeight.bold),
+                    key: Key("Change Password Page Title"),
+                  ),
                   leading: IconButton(
                     onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
@@ -50,10 +58,12 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         context,
                         MaterialPageRoute(builder: (context) => SSOLogin()),
                       );
+                      Key("Change Password Page Navigator");
                     },
                     icon: Icon(Icons.arrow_back),
                     tooltip: 'Home',
                     color: Colors.white,
+                    key: Key("Change Password Page Back Button"),
                   ),
                   actions: <Widget>[
                     // Padding(padding: EdgeInsets.all(20)),
@@ -70,11 +80,13 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         formKey.currentState?.reset();
                       },
                       color: Colors.white,
+                      key: Key("Change Password Page Reset Form Button"),
                     ),
                   ]),
               resizeToAvoidBottomInset: false,
               body: Center(
                 child: SingleChildScrollView(
+                    key: Key("Change Password Page Sccrollbar"),
                     physics: AlwaysScrollableScrollPhysics(),
                     child: Form(
                         key: formKey,
@@ -128,6 +140,8 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                   height: 16.0,
                                 ),
                                 ElevatedButton(
+                                  key: Key(
+                                      "Change Password Page Send OTP Button"),
                                   onPressed: () {
                                     if (emailFormKey.currentState!.validate()) {
                                       setState(() {
@@ -166,6 +180,7 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 SizedBox(
                                   width: 300,
                                   child: TextFormField(
+                                      key: Key("Change Password Page OTP"),
                                       enabled: isEnabledOTP,
                                       style: TextStyle(
                                         color: Colors.white,
@@ -210,6 +225,8 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 SizedBox(
                                   width: 300,
                                   child: TextFormField(
+                                      key: Key(
+                                          "Change Password Page New Password"),
                                       enabled: isEnabledPassword,
                                       style: TextStyle(
                                         color: Colors.white,
@@ -224,30 +241,70 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                           labelText: "New Password",
                                           labelStyle:
                                               TextStyle(color: Colors.white),
+                                          errorText: (!isValidPassword &&
+                                                  passwordController
+                                                      .text.isNotEmpty)
+                                              ? passwordStrength
+                                              : null,
                                           errorStyle: TextStyle(
                                               color: Colors.red,
                                               fontFamily: 'Montserrat',
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600),
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                                passwordVisible
+                                                    ? Icons.visibility_off
+                                                    : Icons.visibility,
+                                                color: Colors.white),
+                                            onPressed: () {
+                                              setState(() {
+                                                passwordVisible =
+                                                    !passwordVisible;
+                                              });
+                                            },
+                                          ),
                                           focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color(0xFF818284)))),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Password cannot be blank';
-                                        } else if (value.length < 8) {
-                                          return 'Password must be at least 8 characters long';
+                                      //       validator: (value) {
+                                      //         if (value == null || value.isEmpty) {
+                                      //           return 'Password cannot be blank';
+                                      //         } else if (value.length < 8) {
+                                      //           return 'Password must be at least 8 characters long';
+                                      //         } else if (RegExp(
+                                      //                 r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                      //             .hasMatch(value)) {
+                                      //           return 'Password must comply with the requirements';
+                                      //         }
+                                      //         return null;
+                                      //       },
+                                      //       onChanged: (value) {
+                                      //         setState(() {
+                                      //           newPassword = value;
+                                      //         });
+                                      //       }),
+                                      // ),
+                                      onChanged: (valuePass) {
+                                        if (valuePass.length < 8) {
+                                          setState(() {
+                                            isValidPassword = false;
+                                            passwordStrength =
+                                                'Password is too short';
+                                          });
                                         } else if (RegExp(
-                                                r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
-                                            .hasMatch(value)) {
-                                          return 'Password must comply with the requirements';
+                                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+{}|:<>?~]).{8,}$')
+                                            .hasMatch(valuePass)) {
+                                          setState(() {
+                                            isValidPassword = true;
+                                            passwordStrength = '';
+                                          });
+                                        } else {
+                                          setState(() {
+                                            isValidPassword = false;
+                                            passwordStrength = 'Weak Password';
+                                          });
                                         }
-                                        return null;
-                                      },
-                                      onChanged: (value) {
-                                        setState(() {
-                                          newPassword = value;
-                                        });
                                       }),
                                 ),
                                 SizedBox(
@@ -256,6 +313,8 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 SizedBox(
                                   width: 300,
                                   child: TextFormField(
+                                      key: Key(
+                                          "Change Password Page Repeat Password"),
                                       enabled: isEnabledRePassword,
                                       // scrollPadding: EdgeInsets.all(16.0),
                                       style: TextStyle(
@@ -268,6 +327,11 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                           enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color(0xFFFACB1B))),
+                                          errorText: (!isValidPassword &&
+                                                  passwordController
+                                                      .text.isNotEmpty)
+                                              ? passwordStrength
+                                              : null,
                                           labelText: "Re-enter Password",
                                           labelStyle:
                                               TextStyle(color: Colors.white),
@@ -276,28 +340,63 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                               fontFamily: 'Montserrat',
                                               fontSize: 14,
                                               fontWeight: FontWeight.w600),
+                                          suffixIcon: IconButton(
+                                            icon: Icon(
+                                                passwordVisible
+                                                    ? Icons.visibility_off
+                                                    : Icons.visibility,
+                                                color: Colors.white),
+                                            onPressed: () {
+                                              setState(() {
+                                                passwordVisible =
+                                                    !passwordVisible;
+                                              });
+                                            },
+                                          ),
                                           focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
                                                   color: Color(0xFF818284)))),
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Password cannot be blank';
-                                        } else if (value.length < 8) {
-                                          return 'Password must be at least 8 characters long';
+                                      //       validator: (value) {
+                                      //         if (value == null || value.isEmpty) {
+                                      //           return 'Password cannot be blank';
+                                      //         } else if (value.length < 8) {
+                                      //           return 'Password must be at least 8 characters long';
+                                      //         } else if (RegExp(
+                                      //                 r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
+                                      //             .hasMatch(value)) {
+                                      //           return 'Password must comply with the requirements';
+                                      //         } else if (newPassword !=
+                                      //             repeatNewPassword) {
+                                      //           return 'Passwords do not match!';
+                                      //         }
+                                      //         return null;
+                                      //       },
+                                      //       onChanged: (value) {
+                                      //         setState(() {
+                                      //           repeatNewPassword = value;
+                                      //         });
+                                      //       }),
+                                      // ),
+                                      onChanged: (valuePass) {
+                                        if (valuePass.length < 8) {
+                                          setState(() {
+                                            isValidPassword = false;
+                                            passwordStrength =
+                                                'Password is too short';
+                                          });
                                         } else if (RegExp(
-                                                r'^(?=.?[A-Z])(?=.?[a-z])(?=.?[0-9])(?=.?[!@#$&*~]).{8,}$')
-                                            .hasMatch(value)) {
-                                          return 'Password must comply with the requirements';
-                                        } else if (newPassword !=
-                                            repeatNewPassword) {
-                                          return 'Passwords do not match!';
+                                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$%^&*()_+{}|:<>?~]).{8,}$')
+                                            .hasMatch(valuePass)) {
+                                          setState(() {
+                                            isValidPassword = true;
+                                            passwordStrength = '';
+                                          });
+                                        } else {
+                                          setState(() {
+                                            isValidPassword = false;
+                                            passwordStrength = 'Weak Password';
+                                          });
                                         }
-                                        return null;
-                                      },
-                                      onChanged: (value) {
-                                        setState(() {
-                                          repeatNewPassword = value;
-                                        });
                                       }),
                                 ),
                                 SizedBox(
@@ -311,11 +410,15 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                 ),
                                 Builder(builder: (BuildContext context) {
                                   return ElevatedButton(
+                                    key: Key(
+                                        "Change Password Page Submit Button"),
                                     onPressed: () {
                                       if (formKey.currentState!.validate()) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           const SnackBar(
+                                            key: Key(
+                                                "Change Password Page Snackbar"),
                                             content: Text('Updating ...',
                                                 style: TextStyle(
                                                     fontSize: 20.0,
@@ -354,12 +457,14 @@ class ForgotPasswordPageState extends State<ForgotPasswordPage> {
                                         },
                                       ),
                                     ),
-                                    child: Text("Submit",
-                                        style: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat',
-                                        )),
+                                    child: Text(
+                                      "Submit",
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat',
+                                      ),
+                                    ),
                                   );
                                 })
                               ] //children

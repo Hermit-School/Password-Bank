@@ -6,14 +6,20 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() => runApp(MyApp());
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Password Bank',
+      key: Key('Main Page Title'),
       home: SplashScreen(),
+      navigatorKey: navigatorKey,
+      initialRoute: '/',
       routes: {
-        '/login': (context) => AuthScreen(),
+        // '/': (context) => SplashScreen(),
+        '/AuthScreen': (context) => AuthScreen(),
       },
     );
   }
@@ -29,7 +35,9 @@ class SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(Duration(milliseconds: 2500), () {
-      Navigator.pushReplacementNamed(context, '/login');
+      // Navigator.pushReplacementNamed(context, '/AuthScreen');
+      navigatorKey.currentState?.pushNamed('/AuthScreen');
+      Key('Main Page Navigator');
     });
   }
 
@@ -51,6 +59,7 @@ class SplashScreenState extends State<SplashScreen> {
                   Image.asset(
                     'assets/images/lockedcloud.png',
                     width: 200.0,
+                    key: Key('Main Page Logo'),
                   ),
                   SizedBox(height: 50.0),
                   Text(
@@ -62,11 +71,13 @@ class SplashScreenState extends State<SplashScreen> {
                       fontFamily: 'Montserrat',
                       color: Colors.white,
                     ),
+                    key: Key('Main Page Text'),
                   ),
                   SizedBox(height: 180.0),
                   SpinKitFoldingCube(
                     color: Colors.white,
                     size: 50.0,
+                    key: Key('Main Page Progressbar'),
                   ),
                   //CircularProgressIndicator(),
                 ],
