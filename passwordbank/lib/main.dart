@@ -37,7 +37,7 @@ class SplashScreenState extends State<SplashScreen> {
     Timer(Duration(milliseconds: 2500), () {
       // Navigator.pushReplacementNamed(context, '/AuthScreen');
       navigatorKey.currentState?.pushNamed('/AuthScreen');
-      Key('Main Page Navigator');
+      // Key('Main Page Navigator');
     });
   }
 

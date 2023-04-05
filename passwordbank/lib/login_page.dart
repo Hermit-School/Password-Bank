@@ -162,7 +162,8 @@ class SSOLoginState extends State<SSOLogin> {
                             // },
                             onChanged: (valueUser) {
                               if (valueUser.length < 8 ||
-                                  RegExp(r'^[_.]').hasMatch(valueUser)) {
+                                  RegExp(r'[^a-zA-Z0-9_.]')
+                                      .hasMatch(valueUser.substring(1))) {
                                 setState(() {
                                   isValidUsername = false;
                                   if (RegExp(r'^[!@#\$%\^&\*\(\)\-\+]')
@@ -292,7 +293,7 @@ class SSOLoginState extends State<SSOLogin> {
                               MaterialPageRoute(
                                   builder: (context) => ForgotPasswordPage()),
                             );
-                            Key("Login Page Navigator");
+                            // Key("Login Page Navigator");
                           },
                           child: const Text(
                             'Forgot Password?',

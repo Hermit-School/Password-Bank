@@ -174,7 +174,7 @@ class AuthScreenState extends State<AuthScreen> {
                     // );
                     runApp(
                         MaterialApp(initialRoute: '/SSOLogin', routes: routes));
-                    Key('AuthScreen Navigator');
+                    // Key('AuthScreen Navigator');
                   },
                   style: ButtonStyle(
                     foregroundColor:
@@ -199,11 +199,11 @@ class AuthScreenState extends State<AuthScreen> {
                 ),
                 SizedBox(width: 30),
                 ElevatedButton(
-                  key: Key('AuthScreen Register'),
+                  key: Key('AuthScreen Register Button'),
                   onPressed: () {
                     runApp(
                         MaterialApp(initialRoute: '/SignUp', routes: routes));
-                    Key('AuthScreen Register Button');
+                    // Key('AuthScreen Register Button');
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(builder: (context) => SignupPage()),
